@@ -1,0 +1,7 @@
+﻿  main.cpp
+c:\users\jahlil walker\desktop\gameengine\cs3113\homeworks\hw2\nyucodebase\main.cpp(195): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\gameengine\cs3113\homeworks\hw2\nyucodebase\main.cpp(205): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\gameengine\cs3113\homeworks\hw2\nyucodebase\main.cpp(215): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\gameengine\cs3113\homeworks\hw2\nyucodebase\main.cpp(223): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  NYUCodebase.vcxproj -> C:\Users\Jahlil Walker\Desktop\GameEngine\CS3113\Homeworks\HW2\Debug\NYUCodebase.exe
+  NYUCodebase.vcxproj -> C:\Users\Jahlil Walker\Desktop\GameEngine\CS3113\Homeworks\HW2\Debug\NYUCodebase.pdb (Partial PDB)
