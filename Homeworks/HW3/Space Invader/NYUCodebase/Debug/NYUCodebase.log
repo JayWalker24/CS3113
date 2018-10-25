@@ -1,0 +1,4 @@
+﻿  main.cpp
+c:\users\jahlil walker\desktop\gameengine\hw3\space invader\nyucodebase\main.cpp(270): warning C4305: '-=': truncation from 'double' to 'float'
+  NYUCodebase.vcxproj -> C:\Users\Jahlil Walker\Desktop\GameEngine\HW3\Space Invader\Debug\NYUCodebase.exe
+  NYUCodebase.vcxproj -> C:\Users\Jahlil Walker\Desktop\GameEngine\HW3\Space Invader\Debug\NYUCodebase.pdb (Partial PDB)
