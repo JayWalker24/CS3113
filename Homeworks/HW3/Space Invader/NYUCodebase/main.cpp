@@ -57,6 +57,94 @@ void drawTriangle(float vertices[], ShaderProgram program) {
 class Player;
 class Bullet;
 class Enemy;
+void DrawText(ShaderProgram &program, int fontTexture, std::string text, float size, float spacing) {
+	float character_size = 1.0 / 16.0f;
+
+	std::vector<float> vertexData;
+	std::vector<float> texCoordData;
+
+	for (size_t i = 0; i < text.size(); i++) {
+		int spriteIndex = (int)text[i];
+
+		float texture_x = (float)(spriteIndex % 16) / 16.0f;
+		float texture_y = (float)(spriteIndex / 16) / 16.0f;
+
+		vertexData.insert(vertexData.end(), {
+			((size + spacing) * i) + (-0.5f * size), 0.5f * size,
+			((size + spacing) * i) + (-0.5f * size), -0.5f * size,
+			((size + spacing) * i) + (0.5f * size), 0.5f * size,
+			((size + spacing) * i) + (0.5f * size), -0.5f * size,
+			((size + spacing) * i) + (0.5f * size), 0.5f * size,
+			((size + spacing) * i) + (-0.5f * size), -0.5f * size,
+		});
+
+		texCoordData.insert(texCoordData.end(), {
+			texture_x, texture_y,
+			texture_x, texture_y + character_size,
+			texture_x + character_size, texture_y,
+			texture_x + character_size, texture_y + character_size,
+			texture_x + character_size, texture_y,
+			texture_x, texture_y + character_size,
+		});
+	}
+
+
+	glBindTexture(GL_TEXTURE_2D, fontTexture);
+	glUseProgram(program.programID);
+
+	glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertexData.data());
+	glEnableVertexAttribArray(program.positionAttribute);
+
+	glVertexAttribPointer(program.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoordData.data());
+	glEnableVertexAttribArray(program.texCoordAttribute);
+
+	glDrawArrays(GL_TRIANGLES, 0, (int)vertexData.size() / 2);
+
+	glDisableVertexAttribArray(program.positionAttribute);
+	glDisableVertexAttribArray(program.texCoordAttribute);
+}
+
+class SheetSprite {
+public:
+	SheetSprite(unsigned int textureID, float u, float v, float width, float height, float size) {
+		this->textureID = textureID;
+		this->u = u;
+		this->v = v;
+		this->width = width;
+		this->height = height;
+		this->size = size;
+	}
+
+	SheetSprite(){}
+	void SheetSprite::Draw(ShaderProgram &program, float vertices[]) {
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		GLfloat texCoords[] = {
+			u, v + height,
+			u + width, v,
+			u, v,
+			u + width, v,
+			u, v + height,
+			u + width, v + height
+		};
+		float aspect = width / height;
+		glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices);
+		glEnableVertexAttribArray(program.positionAttribute);
+
+		glVertexAttribPointer(program.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords);
+		glEnableVertexAttribArray(program.texCoordAttribute);
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		glDisableVertexAttribArray(program.positionAttribute);
+		glDisableVertexAttribArray(program.texCoordAttribute);
+	}
+	float size;
+	unsigned int textureID;
+	float u;
+	float v;
+	float width;
+	float height;
+};
 
 
 class Bullet {
@@ -164,13 +252,17 @@ public:
 	float width = .10f;
 	float height = .10f;
 	bool alive = true;
+	bool moveRight = true;
+	SheetSprite prac;
 
-	Enemy(float x, float y) {
+	Enemy(float x, float y, SheetSprite prac) {
 		this->x = x;
 		this->y = y;
+		this->prac = prac;
 	}
 
 	void draw(ShaderProgram &program) {
+		/*
 		float puck[] = {
 			x,y,
 			x + width,y + height,
@@ -183,6 +275,18 @@ public:
 		};
 		drawTriangle(puck, program);
 		drawTriangle(puck2, program);
+		*/
+
+		float vertices[] = { x,y,
+			x + width,y + height,
+			x,y + height,
+			x,y,
+			x + width,y + height,
+			x + width,y
+		};
+
+		prac.Draw(program, vertices);
+		
 	}
 
 	bool collision(Player me) {
@@ -203,9 +307,72 @@ public:
 		return false;
 	}
 
+	void move() {
+		if (moveRight) {
+			if (x > 1.0f) {
+				y -= .05f;
+				moveRight = false;
+			}
+			else {
+				x += .05f;
+			}
+		}
+		else {
+			if (x < -1.0f) {
+				y -= .05f;
+				moveRight = true;
+			}
+			else {
+				x -= .001f;
+			}
+		}
+		
+	}
+
 
 
 };
+
+
+void move(vector<Enemy*> guys) {
+	bool reachedRightEdge = false;
+	bool reachedLeftEdge = false;
+	for (Enemy* p : guys) {
+		if (p->x > 1.0f&&p->alive) {
+			reachedRightEdge = true;
+		}
+		else if(p->x < -1.0f&&p->alive){
+			reachedLeftEdge = true;
+		}
+	}
+	for (Enemy* p : guys) {
+		if (p->moveRight&&p->alive) {
+			p->x += .001f;
+		}
+		else {
+			p->x -= .001f;
+		}
+	}
+
+	if (reachedRightEdge) {
+		for (Enemy* p : guys) {
+			if (p->alive) {
+				p->moveRight = false;
+				p->y -= .01f;
+			}
+			
+		}
+	}
+	else if (reachedLeftEdge) {
+		for (Enemy* p : guys) {
+			if (p->alive) {
+				p->moveRight = true;
+				p->y -= .01f;
+			}
+		}
+	}
+
+}
 
 int main(int argc, char *argv[])
 {
@@ -224,8 +391,7 @@ int main(int argc, char *argv[])
 
 	/*
 	
-	ShaderProgram program;
-	program.Load(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
+	
 	//program.Load(RESOURCE_FOLDER"vertex.glsl", RESOURCE_FOLDER"fragment.glsl");
 
 	GLuint texture1 = LoadTexture(RESOURCE_FOLDER"emoji.png");
@@ -238,6 +404,8 @@ int main(int argc, char *argv[])
 	GLuint texture3 = LoadTexture(RESOURCE_FOLDER"emoji3.png");
 	*/		
 
+	ShaderProgram programTextured;
+	programTextured.Load(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
 
 	ShaderProgram program;
 	program.Load(RESOURCE_FOLDER"vertex.glsl", RESOURCE_FOLDER"fragment.glsl");
@@ -246,85 +414,128 @@ int main(int argc, char *argv[])
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 	glm::mat4 viewMatrix = glm::mat4(1.0f);
 
+
+
 	ShaderProgram bulletProgram;	
 	bulletProgram.Load(RESOURCE_FOLDER"vertex.glsl", RESOURCE_FOLDER"fragment.glsl");
 
-
+	GLuint font = LoadTexture(RESOURCE_FOLDER"font1.png");
+	GLuint space = LoadTexture(RESOURCE_FOLDER"sheet.png");
 	
 
-	//modelMatrix2 = glm::translate(modelMatrix2, glm::vec3(.60f, 0.0f, .10f));
+	glm::mat4  modelMatrix2 = glm::translate(modelMatrix, glm::vec3(-.80f, 0.2f, .10f));
 	
 	Player me;
 	vector<Enemy*> enemies;
-	int i = 0;
-	
+	SheetSprite prac = SheetSprite(space, 425.0f / 1024.0f, 468.0f / 1024.0f, 93.0f / 1024.0f, 84.0f /
+		1024.0f, 0.2f);
 	float y = .85f;
-	for (int j = 0; i < 10; j++) {
+	for (int j = 0; j < 5; j++) {
 		float x = -.95f;
-		while (i < 10) {
-			Enemy* billy = new Enemy(x, y);
+		for (int k = 0; k < 5; k++) {
+			Enemy* billy = new Enemy(x, y,prac);
 			enemies.push_back(billy);
-			i += 1;
 			x += 0.3f;
 		}
-		y -= .1;
+		
+		y -= .2f;
 	}
 	
-	
+	bool MainMenu = true;
     while (!done) {
-		me.update();
-		for (Enemy* e : enemies) {
-			if (e) {
-				e->collision(me);
+
+		if (MainMenu) {
+			while (SDL_PollEvent(&event)) {
+				// dont know what it does but crashed the prgram w/o it
+				if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
+					done = true;
+				}
+				else if (event.type == SDL_KEYDOWN) {
+					if (event.key.keysym.scancode == SDL_SCANCODE_RETURN) {
+						//modelMatrix = glm::translate(modelMatrix, glm::vec3(.10f, 0.0f, 0.0f));
+						//TODO LEARN CORRECT WAY TO MOVE OBJECTS INSTEAD OF USING CORDINATES
+						MainMenu = false;
+					}
+				}
+
 			}
+
+			glClear(GL_COLOR_BUFFER_BIT);
+
+			programTextured.SetModelMatrix(modelMatrix2);
+			programTextured.SetProjectionMatrix(projectionMatrix);
+			programTextured.SetViewMatrix(viewMatrix);
+			
+
+			DrawText(programTextured, font, "Press Enter", .125f, .00f);
+
+			SDL_GL_SwapWindow(displayWindow);
 		}
-        while (SDL_PollEvent(&event)) {
-			// dont know what it does but crashed the prgram w/o it
-            if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
-                done = true;
-            }
-			else if (event.type == SDL_KEYDOWN) {
-				if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-					//modelMatrix = glm::translate(modelMatrix, glm::vec3(.10f, 0.0f, 0.0f));
-					//TODO LEARN CORRECT WAY TO MOVE OBJECTS INSTEAD OF USING CORDINATES
-					me.goRight();
+		else {
+			me.update();
+			move(enemies);
+			for (Enemy* e : enemies) {
+				if (e) {
+					e->collision(me);
 				}
-				else if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-					//modelMatrix = glm::translate(modelMatrix, glm::vec3(.10f, 0.0f, 0.0f));
-					//TODO LEARN CORRECT WAY TO MOVE OBJECTS INSTEAD OF USING CORDINATES
-					me.goLeft();
-				}
-				else if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-					me.Shoot();
-				
-				}
-
-
 			}
 
-        }
-        glClear(GL_COLOR_BUFFER_BIT);
+			
+			while (SDL_PollEvent(&event)) {
+				// dont know what it does but crashed the prgram w/o it
+				if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
+					done = true;
+				}
+				else if (event.type == SDL_KEYDOWN) {
+					if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+						//modelMatrix = glm::translate(modelMatrix, glm::vec3(.10f, 0.0f, 0.0f));
+						//TODO LEARN CORRECT WAY TO MOVE OBJECTS INSTEAD OF USING CORDINATES
+						if (me.x < 1.0f) {
+							me.goRight();
+						}
+						
+					}
+					else if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+						//modelMatrix = glm::translate(modelMatrix, glm::vec3(.10f, 0.0f, 0.0f));
+						//TODO LEARN CORRECT WAY TO MOVE OBJECTS INSTEAD OF USING CORDINATES
+						if (me.x-.2 > -1) {
+							me.goLeft();
+						}
+						
+					}
+					else if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
+						me.Shoot();
 
-		
-		//me.y += .01;
+					}
 
-		program.SetModelMatrix(modelMatrix);
-		program.SetProjectionMatrix(projectionMatrix);
-		program.SetViewMatrix(viewMatrix);
 
-		for (Enemy* e : enemies) {
-			if (e->alive) {
-				e->draw(program);
+				}
+
 			}
+			glClear(GL_COLOR_BUFFER_BIT);
+
+			program.SetModelMatrix(modelMatrix);
+			program.SetProjectionMatrix(projectionMatrix);
+			program.SetViewMatrix(viewMatrix);
+
+			me.draw(program);
+
+
+			programTextured.SetModelMatrix(modelMatrix);
+			programTextured.SetProjectionMatrix(projectionMatrix);
+			programTextured.SetViewMatrix(viewMatrix);
+
+			for (Enemy* e : enemies) {
+				if (e->alive) {
+					e->draw(programTextured);
+				}
+			}
+			
+
+
+			SDL_GL_SwapWindow(displayWindow);
 		}
-		me.draw(program);
 
-		
-		//displays final window
-
-
-
-        SDL_GL_SwapWindow(displayWindow);
     }
     
     SDL_Quit();
