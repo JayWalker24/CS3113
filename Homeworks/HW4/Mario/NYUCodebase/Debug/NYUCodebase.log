@@ -1,0 +1,7 @@
+﻿  main.cpp
+c:\users\jahlil walker\desktop\gameengine\hw4\mario\nyucodebase\main.cpp(58): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\gameengine\hw4\mario\nyucodebase\main.cpp(233): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\gameengine\hw4\mario\nyucodebase\main.cpp(236): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\gameengine\hw4\mario\nyucodebase\main.cpp(239): warning C4305: '-=': truncation from 'double' to 'float'
+  NYUCodebase.vcxproj -> C:\Users\Jahlil Walker\Desktop\GameEngine\HW4\Mario\Debug\NYUCodebase.exe
+  NYUCodebase.vcxproj -> C:\Users\Jahlil Walker\Desktop\GameEngine\HW4\Mario\Debug\NYUCodebase.pdb (Partial PDB)
