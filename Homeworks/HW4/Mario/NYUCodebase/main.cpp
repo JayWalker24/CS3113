@@ -8,6 +8,8 @@
 #include "glm/mat4x4.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include <vector>
+#include <stdlib.h>  
+#include <time.h> 
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -60,7 +62,7 @@ float lerp(float v0, float v1, float t) {
 
 
 void DrawText(ShaderProgram &program, int fontTexture, std::string text, float size, float spacing) {
-	float character_size = 1.0 / 16.0f;
+	float character_size = 1.1 / 16.0f;
 
 	std::vector<float> vertexData;
 	std::vector<float> texCoordData;
@@ -148,6 +150,57 @@ public:
 	float height;
 };
 
+class Wall {
+public:
+	float x;
+	float y;
+	float hieght = 0.2f;
+	float width = 0.2f;
+	glm::mat4 wallMatrix = glm::mat4(1.0f);
+
+
+	Wall(float x, float y, float hieght, float width) {
+		this->x = x;
+		this->y = y;
+		this->hieght = hieght;
+		this->width = width;
+	}
+
+	void draw(ShaderProgram &program) {
+		glUseProgram(program.programID);
+		//program.SetModelMatrix(wallMatrix);
+		//float vertices[6] = { 0.1f, -1.0f, 0.0f, -0.8f, -0.1f, -1.0f };
+		//float vertices[6] = { x, y, x - 0.1f, y + .2f, x - .2f, y };
+		float verticesTop[6] = { x, y, x - width, y + hieght, x - width, y };
+		program.SetModelMatrix(wallMatrix);
+		glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, verticesTop);
+		glEnableVertexAttribArray(program.positionAttribute);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDisableVertexAttribArray(program.positionAttribute);
+
+		float verticesBot[6] = { x, y, x - width, y + hieght, x, y + hieght };
+		program.SetModelMatrix(wallMatrix);
+		glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, verticesBot);
+		glEnableVertexAttribArray(program.positionAttribute);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDisableVertexAttribArray(program.positionAttribute);
+	}
+
+	void wallCollision(float x1, float y1, bool gameState) {
+		float bufferHieght = .2f;
+		float bufferWidth = .2f;
+		if ((x > x1&&x < x1 + bufferWidth) && (y>y1&&y<y1 + bufferHieght)) {
+			gameState = true;
+		}
+		else {
+			gameState = false;
+		}
+	}
+	
+
+
+};
+
 class Player {
 	private:
 	public:
@@ -162,6 +215,8 @@ class Player {
 		bool touchingRight = false;
 		bool touchingLeft = false;
 		glm::mat4 playerMatrix = glm::mat4(1.0f);
+
+
 		
 	Player() {
 			this->x = 0.1f;
@@ -213,7 +268,8 @@ class Player {
 	void moveUp() {
 		touchingBot = false;
 		//playerMatrix = glm::translate(playerMatrix, glm::vec3(0.0f, velY, 0.0f));
-		accY = .0003f;
+		accY = .0002f;
+		
 	}
 
 	void move() {
@@ -242,53 +298,75 @@ class Player {
 		velY = lerp(velY, 0.0f, .1f);
 		velX += accX;
 		velY += accY;
-		if (!touchingBot) {
+		
+	}
 
+
+	/*
+	
+	
+	*/
+	bool checkCollision(vector<Wall*> blocks) {
+		
+		
+		for (Wall* b : blocks) {
+			if (collision(b)) {
+				this->accX = 0;
+				this->velX = -this->velX;
+				return true;
+			}
 		}
+		return false;
+	}
+
+
+	bool collision(Wall* b) {
+		if (this->x > b->x-.3f) {
+			if (this->y > b->y - .4f) {
+				if (this->x > b->x - .1f) {
+					if (this->y > b->y - .2f) {
+						return true;
+					}
+				}
+			}
+				
+	
+		}
+		return false;
 	}
 
 };
 
-class Wall {
-public:
-	float x;
-	float y;
-	float hieght = 0.2f;
-	float width  = 0.2f;
-	glm::mat4 wallMatrix = glm::mat4(1.0f);
 
 
-	Wall(float x, float y, float hieght, float width){
-		this->x = x;
-		this->y = y;
-		this->hieght = hieght;
-		this -> width = width;
+void checkCollision(Player& me, Wall* block, bool& GameFlag) {
+	//the player has an x and y cordinate
+	//the block has an x and y cordinate
+	//if the bottom of the player equals the top of the block
+	//stop all vertical velocity and acceleration
+
+	/*
+	if (me.x > block->x&&
+		me.x < block->x + block->width/2&&
+		me.y + .2f > block->y-block->hieght&&
+		me.y + .2f < block->y - block->hieght+.005f) {
+		me.velY = 0;
+		me.accY = 0;
+		me.touchingBot = true;
 	}
 
-	void draw(ShaderProgram &program) {
-		glUseProgram(program.programID);
-		//program.SetModelMatrix(wallMatrix);
-		//float vertices[6] = { 0.1f, -1.0f, 0.0f, -0.8f, -0.1f, -1.0f };
-		//float vertices[6] = { x, y, x - 0.1f, y + .2f, x - .2f, y };
-		float verticesTop[6] = { x, y, x - width, y + hieght, x - width, y };
-		program.SetModelMatrix(wallMatrix);
-		glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, verticesTop);
-		glEnableVertexAttribArray(program.positionAttribute);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDisableVertexAttribArray(program.positionAttribute);
-
-		float verticesBot[6] = { x, y, x - width, y + hieght, x, y + hieght };
-		program.SetModelMatrix(wallMatrix);
-		glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, verticesBot);
-		glEnableVertexAttribArray(program.positionAttribute);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDisableVertexAttribArray(program.positionAttribute);
+	
+	
+	*/
+	if ((me.y > block->y&&
+		me.x > block->x)&&(true)){
+		GameFlag = false;
 	}
-
-
-
-};
-
+	
+	
+	
+	
+}
 
 /*
 void move(vector<Enemy*> guys) {
@@ -334,8 +412,10 @@ p->y -= .01f;
 */
 
 
+
 int main(int argc, char *argv[])
 {
+	srand(time(NULL));
     SDL_Init(SDL_INIT_VIDEO);
     displayWindow = SDL_CreateWindow("My Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 680, SDL_WINDOW_OPENGL);
     SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
@@ -380,7 +460,9 @@ int main(int argc, char *argv[])
 	glm::mat4 viewMatrix = glm::mat4(1.0f);
 	glm::mat4 projectionMatrix = glm::ortho(-1.777f, 1.777f, -1.0f, 1.0f, -1.0f, 1.0f);
 
+
 	
+	glm::translate(viewMatrix, glm::vec3(1.0f, 0.0f, 0.0f));
 	
 	Player me;
 	programTextured.SetModelMatrix(modelMatrix);
@@ -391,10 +473,20 @@ int main(int argc, char *argv[])
 	program.SetProjectionMatrix(projectionMatrix);
 	program.SetViewMatrix(viewMatrix);
 
-	float lastFrameTicks = 0.0f;
 	
-    while (!done) {
 
+	float lastFrameTicks = 0.0f;
+	vector<Wall*> blocks;
+	for (float i = 0.5; i < 30.0; i += .4) {
+		float randHeight = (rand() % 100);
+		randHeight /= 100;
+		randHeight -= 1.0f;
+		Wall* block = new Wall(i,randHeight,.2f, .2f);
+		blocks.push_back(block);
+	}
+	bool gameState = true;
+    while (!done) {
+			
 			float ticks = (float)SDL_GetTicks() / 1000.0f;
 			float elapsed = ticks - lastFrameTicks;
 			lastFrameTicks = ticks;
@@ -463,20 +555,45 @@ int main(int argc, char *argv[])
 			*/
 			
 
+			//Wall* ptr = new Wall(0.0f, 0.0f, .2f, .2f);
 
-			me.updatePosition();
-			me.move();
+			for (Wall* p : blocks) {
+				checkCollision(me, p, gameState);
+			}
+
+			//checkCollision(me, ptr);
+			if (gameState) {
+				DrawText(programTextured, font, "Don't touch the white blocks", .105f, .00f);
+				me.updatePosition();
+				viewMatrix = glm::translate(viewMatrix, glm::vec3(-me.velX * 2, -me.velY, 0.0f));
+				program.SetViewMatrix(viewMatrix);
+				me.move();
+			}
+			else {
+				DrawText(programTextured, font, " You Lost", .105f, .00f);
+			}
+			
+			
+			
 
 			//me.drawTextured(programTextured, emojiTexture);
 			me.draw(program);
 
+
+			/*
 			string debugMode;
-			debugMode.append(to_string(me.x));
+			debugMode.append(to_string(ptr->x));
 			debugMode.append(" ");
-			debugMode.append(to_string(me.y));
-			DrawText(programTextured, font, debugMode, .105f, .00f);
-			Wall first(0.0f, 0.0f, .2f, .2f);
-			first.draw(program);
+			debugMode.append(to_string(ptr->x));
+			//DrawText(programTextured, font, debugMode, .105f, .00f);
+			*/
+			
+			
+			
+			for (Wall* p : blocks) {
+				p->draw(program);
+			}
+			
 			//glBindTexture(GL_TEXTURE_2D, space);
 
 			/*
