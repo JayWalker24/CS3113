@@ -10,6 +10,7 @@
 #include <vector>
 #include <stdlib.h>  
 #include <time.h> 
+#include <SDL_mixer.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -484,9 +485,21 @@ int main(int argc, char *argv[])
 		Wall* block = new Wall(i,randHeight,.2f, .2f);
 		blocks.push_back(block);
 	}
+
+	//int Mix_OpenAudio(int frequency, Uint16 format, int channels, int chunksize);
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+	Mix_Chunk *someSound;
+	someSound = Mix_LoadWAV("gameJump.wav");
+	//Mix_VolumeChunk(someSound, 90);
+
+
+	Mix_Music *music;
+	music = Mix_LoadMUS("hitmiss.mp3");
 	bool gameState = true;
+	//Mix_PlayMusic(music, -1);
     while (!done) {
 			
+			//
 			float ticks = (float)SDL_GetTicks() / 1000.0f;
 			float elapsed = ticks - lastFrameTicks;
 			lastFrameTicks = ticks;
@@ -520,6 +533,7 @@ int main(int argc, char *argv[])
 					}
 					else if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
 						me.moveUp();
+						Mix_PlayChannel(-1, someSound, 0);
 					}
 
 

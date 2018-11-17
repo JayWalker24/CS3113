@@ -1,0 +1,16 @@
+﻿  main.cpp
+main.cpp(61): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+main.cpp(66): warning C4305: 'initializing': truncation from 'double' to 'float'
+main.cpp(290): warning C4305: '-=': truncation from 'double' to 'float'
+main.cpp(293): warning C4305: '+=': truncation from 'double' to 'float'
+main.cpp(296): warning C4305: '-=': truncation from 'double' to 'float'
+main.cpp(419): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+main.cpp(481): warning C4305: '+=': truncation from 'double' to 'float'
+main.cpp(482): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Generating code
+  1 of 495 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  NYUCodebase.vcxproj -> C:\Users\Jahlil Walker\Desktop\GameDesignHW\CS3113\Homeworks\HW5\Mario\Release\NYUCodebase.exe
+  NYUCodebase.vcxproj -> C:\Users\Jahlil Walker\Desktop\GameDesignHW\CS3113\Homeworks\HW5\Mario\Release\NYUCodebase.pdb (Full PDB)
