@@ -1,0 +1,53 @@
+﻿  ShaderProgram.cpp
+  main.cpp
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(382): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(382): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(383): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(383): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(463): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(463): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(464): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(464): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(472): warning C4018: '>': signed/unsigned mismatch
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(490): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(492): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(503): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(503): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(504): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(504): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(511): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(512): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(584): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(585): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(586): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(587): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(588): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(589): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(592): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(592): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(593): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(593): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(598): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(599): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(600): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(601): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(602): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(603): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(703): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(704): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(708): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(808): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(823): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(835): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(846): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(978): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(994): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(1007): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(1019): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(1031): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(1043): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(1054): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\jahlil walker\desktop\angieexams\cs3113\homeworks\realfinal\snek\nyucodebase\main.cpp(1065): warning C4305: '+=': truncation from 'double' to 'float'
+  Generating Code...
+  NYUCodebase.vcxproj -> C:\Users\Jahlil Walker\Desktop\AngieExams\CS3113\Homeworks\RealFinal\Snek\Debug\NYUCodebase.exe
+  NYUCodebase.vcxproj -> C:\Users\Jahlil Walker\Desktop\AngieExams\CS3113\Homeworks\RealFinal\Snek\Debug\NYUCodebase.pdb (Partial PDB)
