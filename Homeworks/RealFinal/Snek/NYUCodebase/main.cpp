@@ -482,6 +482,7 @@ public:
 	float x;
 	float y;
 	float velY;
+	float r = 0.1f;
 	float velX;
 	glm::mat4 AppleMatrix = glm::mat4(1.0f);
 	int direction = -1;
@@ -499,6 +500,11 @@ public:
 		
 		program.SetModelMatrix(AppleMatrix);
 		program.SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+		if (this->r > 1.0f) {
+			this->r = 0.0f;
+		}
+		r += 0.1f;
+		program.SetColor(r, 0.0f, 0.0f, 1.0f);
 		//float vertices[6] = { 0.1f, -1.0f, 0.0f, -0.8f, -0.1f, -1.0f };
 		float vertices[6] = { x, y+.01, x - 0.09f, y + .1f, x - .09f, y+.01 };
 		float vertices2[6] = { x, y+.01, x - 0.09f, y + .1f, x , y + .1f };
@@ -632,7 +638,7 @@ int main(int argc, char *argv[])
 
 	Mix_Music *music;
 	music = Mix_LoadMUS("hitmiss.mp3");
-	Mix_PlayMusic(music, -1);
+	//Mix_PlayMusic(music, -1);
 	/*
 	
 	
